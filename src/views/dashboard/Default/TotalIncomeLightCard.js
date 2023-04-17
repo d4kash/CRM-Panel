@@ -79,7 +79,7 @@ const TotalIncomeLightCard = ({ isLoading }) => {
                         <List sx={{ py: 0 }}>
                             <ListItem alignItems="center" disableGutters sx={{ py: 0 }}>
                                 <ListItemAvatar>
-                                    <Typography variant="h3" color="black" sx={{ py: 0, mr: 9.25 }}>
+                                    <Typography variant="h4" color="black" sx={{ py: 0, mr: 9.25 }}>
                                         Emission By Carding
                                     </Typography>
                                     {/* <Avatar
