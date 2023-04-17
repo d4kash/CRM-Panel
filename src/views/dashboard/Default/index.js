@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // material-ui
-import { Grid } from '@mui/material';
+import { Grid, CircularProgress } from '@mui/material';
 
 // project imports
 import EarningCard from './EarningCard';
@@ -12,11 +12,12 @@ import TotalIncomeLightCard from './TotalIncomeLightCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
 import axios from 'axios';
+
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
 const Dashboard = () => {
     const [isLoading, setLoading] = useState(true);
-    const [dataFromApi, setDataFromApi] = useState({
+    let [data, setData] = useState({
         Topemission: {
             Hltcl: '33',
             spinning: '28',
@@ -33,15 +34,15 @@ const Dashboard = () => {
         async function getData() {
             var api = 'https://rnznbnt3p5.execute-api.ap-south-1.amazonaws.com/api/all_carbonfootprint';
             await axios.get(api).then((res) => {
-                if (res.data['body-json']['statusCode'] !== 200) return setLoading(false);
+                // if (res.data['body-json']['statusCode'] != 200) return setLoading(false);
                 // console.warn(res.data['body-json']['body']['Item']);
-                setDataFromApi(res.data['body-json']['body']['Item']);
+                setData(res.data['body-json']['body']['Item']);
                 setLoading(false);
             });
         }
 
         getData();
-        // console.warn(dataFromApi.EmissionbyTransportation);
+        console.warn(data.EmissionbyTransportation);
     }, []);
 
     return (
@@ -49,7 +50,7 @@ const Dashboard = () => {
             <Grid item xs={12}>
                 <Grid container spacing={gridSpacing}>
                     <Grid item lg={4} md={6} sm={6} xs={12}>
-                        <EarningCard isLoading={isLoading} emissionData={dataFromApi.EmissionbyTransportation} />
+                        <EarningCard isLoading={isLoading} />
                     </Grid>
                     <Grid item lg={4} md={6} sm={6} xs={12}>
                         <TotalOrderLineChartCard isLoading={isLoading} />

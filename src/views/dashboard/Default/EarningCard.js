@@ -68,7 +68,19 @@ const EarningCard = ({ isLoading }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    let [data, setData] = useState({
+        Topemission: {
+            Hltcl: '33',
+            spinning: '28',
+            carding: '23',
+            transportation: '25'
+        },
+        carbonFootprint: '2,412,314t',
+        Id: 'id123',
+        EmissionbyTransportation: '',
+        EmissionsbySpinning: '723,694t',
+        Emissionbycarding: '241,231'
+    });
     return (
         <>
             {isLoading ? (
@@ -136,7 +148,7 @@ const EarningCard = ({ isLoading }) => {
                                 <Grid container alignItems="center">
                                     <Grid item>
                                         <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                            2,412,314t
+                                            {data.carbonFootprint}
                                         </Typography>
                                         <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
                                             CO2e

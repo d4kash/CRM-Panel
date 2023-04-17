@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
 import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
@@ -41,9 +42,36 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 // ==============================|| DASHBOARD - TOTAL INCOME DARK CARD ||============================== //
 
-const TotalIncomeDarkCard = ({ isLoading, emissionData }) => {
+const TotalIncomeDarkCard = ({ isLoading }) => {
     const theme = useTheme();
+    let [data, setData] = useState({
+        Topemission: {
+            Hltcl: '33',
+            spinning: '28',
+            carding: '23',
+            transportation: '25'
+        },
+        carbonFootprint: '2,412,314t',
+        Id: 'id123',
+        EmissionbyTransportation: '',
+        EmissionsbySpinning: '723,694t',
+        Emissionbycarding: '241,231'
+    });
+    useEffect(() => {
+        async function getData() {
+            var api = 'https://rnznbnt3p5.execute-api.ap-south-1.amazonaws.com/api/all_carbonfootprint';
+            await axios.get(api).then((res) => {
+                // if (res.data['body-json']['statusCode'] != 200) return setLoading(false);
+                // console.warn(res.data['body-json']['body']['Item']);
+                setData(res.data['body-json']['body']['Item']);
+                // setLoading(false);
+            });
+        }
 
+        getData();
+        // console.warn(data.EmissionbyTransportation);
+    }, []);
+    // console.log(emissionData);
     return (
         <>
             {isLoading ? (
@@ -77,7 +105,7 @@ const TotalIncomeDarkCard = ({ isLoading, emissionData }) => {
                                     }}
                                     primary={
                                         <Typography variant="h4" sx={{ color: '#fff' }}>
-                                            {emissionData}
+                                            {data.EmissionbyTransportation}
                                         </Typography>
                                     }
                                     secondary={

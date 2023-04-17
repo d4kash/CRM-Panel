@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
@@ -65,7 +65,33 @@ const CardWrapper = styled(MainCard)(({ theme }) => ({
 
 const TotalOrderLineChartCard = ({ isLoading }) => {
     const theme = useTheme();
+    let [data, setData] = useState({
+        Topemission: {
+            Hltcl: '33',
+            spinning: '28',
+            carding: '23',
+            transportation: '25'
+        },
+        carbonFootprint: '2,412,314t',
+        Id: 'id123',
+        EmissionbyTransportation: '',
+        EmissionsbySpinning: '723,694t',
+        Emissionbycarding: '241,231'
+    });
+    useEffect(() => {
+        async function getData() {
+            var api = 'https://rnznbnt3p5.execute-api.ap-south-1.amazonaws.com/api/all_carbonfootprint';
+            await axios.get(api).then((res) => {
+                // if (res.data['body-json']['statusCode'] != 200) return setLoading(false);
+                // console.warn(res.data['body-json']['body']['Item']);
+                setData(res.data['body-json']['body']['Item']);
+                // setLoading(false);
+            });
+        }
 
+        getData();
+        // console.warn(data.EmissionbyTransportation);
+    }, []);
     const [timeValue, setTimeValue] = useState(false);
     const handleChangeTime = (event, newValue) => {
         setTimeValue(newValue);
@@ -127,11 +153,11 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                                             <Grid item>
                                                 {timeValue ? (
                                                     <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                                        72,3694t CO2e
+                                                        {data.EmissionsbySpinning} CO2e
                                                     </Typography>
                                                 ) : (
                                                     <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>
-                                                        72,3694t CO2e
+                                                        {data.EmissionsbySpinning} CO2e
                                                     </Typography>
                                                 )}
                                             </Grid>
